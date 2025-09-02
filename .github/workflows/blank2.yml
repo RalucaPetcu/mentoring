@@ -1,0 +1,23 @@
+name: "Add PR Description"
+
+on:
+  pull_request:
+    types: [opened, edited]
+
+jobs:
+  add-description:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write   # Required to update PRs
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set PR description
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          NEW_BODY="### Automatic PR Description 🚀This PR was automatically updated by GitHub Actions.
