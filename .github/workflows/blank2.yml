@@ -8,16 +8,24 @@ jobs:
   add-description:
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: write   # Required to update PRs
+      pull-requests: write
       contents: read
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set PR description
+      - name: Update PR description
         env:
-          GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
+          GH_TOKEN: ${{ github.token }}  # gh CLI uses this
         run: |
-          NEW_BODY="### Automatic PR Description 🚀This PR was automatically updated by GitHub Actions.
+          NEW_BODY=$(cat <<'EOF'
+### Automatic PR Description 🚀
+
+This PR was automatically updated by GitHub Actions.
+- Repo: `${{ github.repository }}`
+- PR Number: #${{ github.event.pull_request.number }}
+- Triggered by: @${{ github.actor }}
+EOF
+)
+          gh pr edit "${{ github.event.pull_request.number }}" --body "$NEW_BODY"
