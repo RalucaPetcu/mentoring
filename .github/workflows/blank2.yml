@@ -2,7 +2,8 @@ name: "Add PR Description"
 
 on:
   pull_request:
-    types: [opened, edited]
+    types: 
+      - opened
 
 jobs:
   add-description:
