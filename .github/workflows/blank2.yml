@@ -2,8 +2,11 @@ name: "Add PR Description"
 
 on:
   pull_request:
-    types: 
+    types:
       - opened
+    branches:
+      - main
+      
 
 jobs:
   add-description:
