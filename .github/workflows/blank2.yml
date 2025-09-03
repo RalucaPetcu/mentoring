@@ -21,11 +21,10 @@ jobs:
         run: |
           NEW_BODY=$(cat <<'EOF'
           ### Automatic PR Description 🚀
-
-          This PR was automatically updated by GitHub Actions.
-          - Repo: `${{ github.repository }}`
-          - PR Number: #${{ github.event.pull_request.number }}
-          - Triggered by: @${{ github.actor }}
+            This PR was automatically updated by GitHub Actions.
+            - Repo: `${{ github.repository }}`
+            - PR Number: #${{ github.event.pull_request.number }}
+            - Triggered by: @${{ github.actor }}
           EOF
           )
           gh pr edit "${{ github.event.pull_request.number }}" --body "$NEW_BODY"
